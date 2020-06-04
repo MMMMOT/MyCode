@@ -1,0 +1,57 @@
+//二叉树寻找每层最大值(BFS广度遍历)
+import org.junit.jupiter.api.Test;
+
+import java.util.*;
+
+class TreeNode{
+    int val;
+    TreeNode left;
+    TreeNode right;
+    public TreeNode(){}
+    public TreeNode(int x){
+        val = x;
+        left = null;
+        right = null;
+    }
+}
+
+public class BFS {
+    public List<Integer> largestValue(TreeNode root){
+        List<Integer> res = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        if (root == null) return res;
+
+        queue.add(root);
+        while (!queue.isEmpty()){
+            int tmpQueueSize = queue.size(), max = Integer.MIN_VALUE;
+            for (int i = 0; i < tmpQueueSize; i++) {
+                TreeNode tmp = queue.poll();
+                if (tmp.val > max) max = tmp.val;
+                if (tmp.left != null) queue.add(tmp.left);
+                if (tmp.right != null) queue.add(tmp.right);
+            }
+            res.add(max);
+        }
+
+        return res;
+    }
+    @Test
+    public void Test1() {
+        TreeNode root = new TreeNode(1);
+        TreeNode n1 = new TreeNode(4);
+        TreeNode n2 = new TreeNode(2);
+        TreeNode n3 = new TreeNode(6);
+        TreeNode n4 = new TreeNode(9);
+        TreeNode n5 = new TreeNode(1);
+        root.left = n1;
+        root.right = n2;
+        n1.left = n3;
+        n1.right = n4;
+        n2.right =n5;
+        List<Integer> list = largestValue(root);
+        for (Integer l:
+             list) {
+            System.out.println(l);
+        }
+    }
+}
